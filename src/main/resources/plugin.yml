@@ -1,0 +1,7 @@
+name: Advanced Beacons
+version: @version@
+main: net.codedstingray.advancedbeacons.AdvancedBeacons
+api-version: 1.13
+authors: [CodedStingray]
+description: A Spigot plugin that creates advanced beacons that provide more functionality and customizability than vanilla beacons.
+website: advancedbeacons.codedstingray.net
