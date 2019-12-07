@@ -5,3 +5,9 @@ api-version: 1.13
 authors: [CodedStingray]
 description: A Spigot plugin that creates advanced beacons that provide more functionality and customizability than vanilla beacons.
 website: advancedbeacons.codedstingray.net
+commands:
+  advancedbeaconactivator:
+    description: Gives you the requested amount of Advanced Beacon Activators, or 1 if no amount is specified
+    usage: advancedbeaconactivator [amount]
+    aliases: [aba, activator, getactivator]
+    permission: advancedbeacons.admin.getactivator
