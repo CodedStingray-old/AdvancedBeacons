@@ -19,6 +19,7 @@
 package net.codedstingray.advancedbeacons;
 
 import net.codedstingray.advancedbeacons.commands.CommandInitializer;
+import net.codedstingray.advancedbeacons.event.listener.BeaconActivatorListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -31,6 +32,8 @@ public final class AdvancedBeacons extends JavaPlugin {
     @Override
     public void onEnable() {
         CommandInitializer.initCommands(this);
+
+        getServer().getPluginManager().registerEvents(new BeaconActivatorListener(), this);
 
         NamespacedKey key = new NamespacedKey(this, "recipe_advanced_beacon_activator");
         ShapedRecipe recipe = new ShapedRecipe(key, Data.getBeaconActivator());
