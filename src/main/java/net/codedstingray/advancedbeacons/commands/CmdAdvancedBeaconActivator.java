@@ -32,7 +32,7 @@ public class CmdAdvancedBeaconActivator implements CommandExecutor {
         ItemStack beaconActivator = Data.getBeaconActivator();
         beaconActivator.setAmount(amount);
         player.getInventory().addItem(beaconActivator);
-        player.sendMessage(ChatColor.AQUA + "Here are " + amount + " Advanced Beacon Activators");
+        player.sendMessage(ChatColor.GREEN + "Added " + amount + " Advanced Beacon Activators to your inventory");
 
         return true;
     }

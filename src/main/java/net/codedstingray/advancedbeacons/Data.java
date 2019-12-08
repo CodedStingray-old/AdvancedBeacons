@@ -14,7 +14,7 @@ public class Data {
         ItemStack _beaconActivator = new ItemStack(Material.NETHER_STAR);
         ItemMeta meta = _beaconActivator.getItemMeta();
 
-        meta.setDisplayName(ChatColor.AQUA + "Advanced Beacon Activator");
+        meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Advanced Beacon Activator");
         LinkedList<String> lore = new LinkedList<>();
         lore.add(ChatColor.RESET + "Activates an Advanced Beacon.");
         lore.add(ChatColor.RESET + "Consumed after use");
