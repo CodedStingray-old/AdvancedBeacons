@@ -2,6 +2,7 @@ package net.codedstingray.advancedbeacons.event.listener;
 
 import net.codedstingray.advancedbeacons.Data;
 import net.codedstingray.advancedbeacons.beacon.BeaconManager;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -14,9 +15,13 @@ public class BeaconActivatorListener implements Listener {
     public void onActivatorUsed(PlayerInteractEvent event) {
         Action action = event.getAction();
         ItemStack item = event.getItem();
+        Player player = event.getPlayer();
 
         if(item != null && action == Action.RIGHT_CLICK_BLOCK && item.isSimilar(Data.getBeaconActivator())) {
-            BeaconManager.createBeacon(event.getPlayer(), event.getClickedBlock().getLocation());
+            boolean success = BeaconManager.createBeacon(player, event.getClickedBlock().getLocation());
+            if(success) {
+                item.setAmount(item.getAmount() - 1);
+            }
         }
     }
 }
