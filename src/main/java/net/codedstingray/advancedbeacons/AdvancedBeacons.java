@@ -31,6 +31,8 @@ public final class AdvancedBeacons extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
+
         CommandInitializer.initCommands(this);
 
         getServer().getPluginManager().registerEvents(new BeaconActivatorListener(), this);
@@ -57,5 +59,12 @@ public final class AdvancedBeacons extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+
+    private static AdvancedBeacons instance;
+
+    public static AdvancedBeacons getInstance() {
+        return instance;
     }
 }
