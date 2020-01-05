@@ -1,6 +1,23 @@
+/*
+ * AdvancedBeacons, a Minecraft plugin for a better beacon experience
+ * Copyright (C) CodedStingray <http://codedstingray.net>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package net.codedstingray.advancedbeacons.beacon;
 
-import net.codedstingray.advancedbeacons.AdvancedBeacons;
 import net.codedstingray.advancedbeacons.Data;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,8 +32,6 @@ public class BeaconUtilities {
     }
 
     public static BeaconStructure validateBeacon(Location location) {
-        AdvancedBeacons.getInstance().getLogger().info("Validating beacon at " + location);
-
         if(!location.getBlock().getType().equals(Material.BEACON)) {
             return BeaconStructure.noBeacon();
         }
@@ -88,5 +103,22 @@ public class BeaconUtilities {
             default:
                 return -1;
         }
+    }
+
+    /**
+     * Determines if the given position is in the AABB region of the given advanced beacon.
+     * The AABB region is defined as ([-4,4], [-1,-4], [-4,4])
+     * @param beacon The beacon to do the AABB check on
+     * @param location The location to do the AABB check on
+     * @return true if the location is within the AABB region of the beacon, false otherwise
+     */
+    static boolean AABB(AdvancedBeacon beacon, Location location) {
+        int dx = Math.abs(location.getBlockX() - beacon.getLocation().getBlockX());
+        int dy = location.getBlockY() - beacon.getLocation().getBlockY();
+        int dz = Math.abs(location.getBlockZ() - beacon.getLocation().getBlockZ());
+
+        return dx <= 4 &&
+                dy <= -1 && dy >= -4 &&
+                dz <= 4;
     }
 }

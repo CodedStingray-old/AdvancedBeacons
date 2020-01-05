@@ -18,6 +18,8 @@
 
 package net.codedstingray.advancedbeacons;
 
+import net.codedstingray.advancedbeacons.beacon.BeaconManager;
+import net.codedstingray.advancedbeacons.beacon.BeaconUpdater;
 import net.codedstingray.advancedbeacons.commands.CommandInitializer;
 import net.codedstingray.advancedbeacons.event.listener.BeaconActivatorListener;
 import org.bukkit.Bukkit;
@@ -28,13 +30,19 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class AdvancedBeacons extends JavaPlugin {
 
+    private BeaconManager beaconManager;
+    private BeaconUpdater beaconUpdater;
 
     @Override
     public void onEnable() {
         instance = this;
+        beaconManager = new BeaconManager();
+        beaconUpdater = new BeaconUpdater();
+        beaconUpdater.runTaskTimer(this, 0, 1);
 
         CommandInitializer.initCommands(this);
 
+        getServer().getPluginManager().registerEvents(beaconManager, this);
         getServer().getPluginManager().registerEvents(new BeaconActivatorListener(), this);
 
         NamespacedKey key = new NamespacedKey(this, "recipe_advanced_beacon_activator");
@@ -59,6 +67,10 @@ public final class AdvancedBeacons extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public BeaconManager getBeaconManager() {
+        return beaconManager;
     }
 
 
