@@ -20,6 +20,7 @@ package net.codedstingray.advancedbeacons.event.listener;
 
 import net.codedstingray.advancedbeacons.AdvancedBeacons;
 import net.codedstingray.advancedbeacons.Data;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,7 +38,7 @@ public class BeaconActivatorListener implements Listener {
 
         if(item != null && action == Action.RIGHT_CLICK_BLOCK && item.isSimilar(Data.getBeaconActivator())) {
             boolean success = AdvancedBeacons.getInstance().getBeaconManager().createBeacon(player, event.getClickedBlock().getLocation());
-            if(success) {
+            if(success && player.getGameMode() != GameMode.CREATIVE) {
                 item.setAmount(item.getAmount() - 1);
             }
         }

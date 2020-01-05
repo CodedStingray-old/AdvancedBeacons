@@ -18,10 +18,13 @@
 
 package net.codedstingray.advancedbeacons.beacon;
 
+import net.codedstingray.advancedbeacons.Data;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -65,13 +68,22 @@ public class BeaconManager implements Listener {
         return true;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
         Location location = event.getBlock().getLocation();
-        checkLocation(location);
+        Player player = event.getPlayer();
+        if(advancedBeacons.get(location) != null) {
+            //remove the beacon from the list and drop an activator if player is not in creative
+            advancedBeacons.remove(location);
+            if(player.getGameMode() != GameMode.CREATIVE) {
+                location.getWorld().dropItem(location, Data.getBeaconActivator());
+            }
+        } else {
+            checkLocation(location);
+        }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockPlace(BlockPlaceEvent event) {
         Location location = event.getBlock().getLocation();
         checkLocation(location);
