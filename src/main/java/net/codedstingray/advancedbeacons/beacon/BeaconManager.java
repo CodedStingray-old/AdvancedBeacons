@@ -22,12 +22,15 @@ import net.codedstingray.advancedbeacons.Data;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -68,6 +71,7 @@ public class BeaconManager implements Listener {
         return true;
     }
 
+    //Handling block breaking and placing
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
         Location location = event.getBlock().getLocation();
@@ -94,6 +98,20 @@ public class BeaconManager implements Listener {
             if(BeaconUtilities.AABB(beacon, location)) {
                 //tell beacon to check the beacon structure on next update call
                 beacon.checkStructure();
+            }
+        }
+    }
+
+    //Handling Beacon opening
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onBeaconOpen(PlayerInteractEvent event) {
+        Block block = event.getClickedBlock();
+        if(block != null && block.getType().equals(Material.BEACON)) {
+            Location location = block.getLocation();
+            AdvancedBeacon beacon = advancedBeacons.get(location);
+            if(beacon != null) {
+                event.setCancelled(true);
+                //TODO: open advanced beacon ui
             }
         }
     }
