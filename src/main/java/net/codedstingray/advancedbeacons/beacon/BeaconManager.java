@@ -28,6 +28,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -105,7 +106,12 @@ public class BeaconManager implements Listener {
     //Handling Beacon opening
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBeaconOpen(PlayerInteractEvent event) {
+        if(event.getPlayer().isSneaking() || !event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            //We're only interested in the event if it's a right click and the player isn't sneaking
+            return;
+        }
         Block block = event.getClickedBlock();
+
         if(block != null && block.getType().equals(Material.BEACON)) {
             Location location = block.getLocation();
             AdvancedBeacon beacon = advancedBeacons.get(location);
