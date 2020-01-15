@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
@@ -11,24 +12,36 @@ import java.util.*;
 public class Data {
 
     private static final ItemStack beaconActivator;
+    private static final HashMap<String, ItemStack> menuItems = new HashMap<>();
     private static final Set<Material> containers;
     private static final Set<Material> powerBlocks;
 
+    private static final EnchantmentData[] NO_ENCHANTMENT = {};
+
     static {
-        //beacon activator
-        beaconActivator = new ItemStack(Material.NETHER_STAR);
-        ItemMeta meta = beaconActivator.getItemMeta();
+        //<editor-fold desc="Items" defaultstate="collapsed">
+        //<editor-fold desc="Activator" defaultstate="collapsed">
+        beaconActivator = createGuiItem(
+                Material.NETHER_STAR,
+                ChatColor.LIGHT_PURPLE + "Advanced Beacon Activator",
+                new EnchantmentData[] {
+                        new EnchantmentData(Enchantment.FIRE_ASPECT, 1, true)
+                },
+                ChatColor.RESET + "Activates an Advanced Beacon.",
+                ChatColor.RESET + "Consumed after use"
+        );
+        //</editor-fold>
+        //<editor-fold desc="Menu Items" defaultstate="collapsed">
+        menuItems.put("Main_Header", createGuiItem(
+                Material.BEACON,
+                ChatColor.AQUA + "Advanced Beacon",
+                NO_ENCHANTMENT,
+                ChatColor.RESET + "Status: Unknown"
+        ));
+        //</editor-fold>
+        //</editor-fold>
 
-        meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Advanced Beacon Activator");
-        LinkedList<String> lore = new LinkedList<>();
-        lore.add(ChatColor.RESET + "Activates an Advanced Beacon.");
-        lore.add(ChatColor.RESET + "Consumed after use");
-        meta.setLore(lore);
-        meta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
-        beaconActivator.setItemMeta(meta);
-
-
-        //containers
+        //<editor-fold desc="Containers" defaultstate="collapsed">
         Set<Material> _containers = new HashSet<>();
         _containers.add(Material.CHEST);
         _containers.add(Material.TRAPPED_CHEST);
@@ -54,14 +67,34 @@ public class Data {
         _containers.add(Material.HOPPER);
         _containers.add(Material.FURNACE);
         containers = Collections.unmodifiableSet(_containers);
+        //</editor-fold>
 
-        //power blocks
+        //<editor-fold desc="Power Blocks" defaultstate="collapsed">
         Set<Material> _powerBlocks = new HashSet<>();
         _powerBlocks.add(Material.IRON_BLOCK);
         _powerBlocks.add(Material.GOLD_BLOCK);
         _powerBlocks.add(Material.EMERALD_BLOCK);
         _powerBlocks.add(Material.DIAMOND_BLOCK);
         powerBlocks = Collections.unmodifiableSet(_containers);
+        //</editor-fold>
+    }
+
+    private static ItemStack createGuiItem(Material material, String name, EnchantmentData[] enchantments, String... lore) {
+        ItemStack item = new ItemStack(material, 1);
+
+        ItemMeta meta = item.getItemMeta();
+        if(meta != null) {
+            meta.setDisplayName(name);
+            meta.setLore(Arrays.asList(lore));
+
+            for(EnchantmentData e: enchantments) {
+                meta.addEnchant(e.enchantment, e.level, e.ignoreLevelCap);
+            }
+
+            item.setItemMeta(meta);
+        }
+
+        return item;
     }
 
 
@@ -85,5 +118,22 @@ public class Data {
 
     public static boolean isPowerBlock(Material blockType) {
         return powerBlocks.contains(blockType);
+    }
+
+    public static ItemStack getMenuItem(String id) {
+        return menuItems.get(id);
+    }
+
+
+    private static class EnchantmentData {
+        public final Enchantment enchantment;
+        public final int level;
+        public final boolean ignoreLevelCap;
+
+        public EnchantmentData(Enchantment enchantment, int level, boolean ignoreLevelCap) {
+            this.enchantment = enchantment;
+            this.level = level;
+            this.ignoreLevelCap = ignoreLevelCap;
+        }
     }
 }

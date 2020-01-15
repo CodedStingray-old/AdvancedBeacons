@@ -18,6 +18,7 @@
 
 package net.codedstingray.advancedbeacons.beacon;
 
+import net.codedstingray.advancedbeacons.inventory.BeaconGuiMain;
 import org.bukkit.Location;
 
 public class AdvancedBeacon {
@@ -26,6 +27,8 @@ public class AdvancedBeacon {
     private Location location;
 
     private boolean checkStructure = false;
+
+    public final BeaconGuiMain guiMain = new BeaconGuiMain(this);
 
     public AdvancedBeacon(BeaconStructure structure, Location location) {
         this.structure = structure;
