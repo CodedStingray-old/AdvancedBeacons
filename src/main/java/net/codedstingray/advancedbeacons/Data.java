@@ -32,11 +32,52 @@ public class Data {
         );
         //</editor-fold>
         //<editor-fold desc="Menu Items" defaultstate="collapsed">
-        menuItems.put("Main_Header", createGuiItem(
+        menuItems.put("Header_Main", createGuiItem(
                 Material.BEACON,
-                ChatColor.AQUA + "Advanced Beacon",
+                ChatColor.AQUA + "Stats",
                 NO_ENCHANTMENT,
                 ChatColor.RESET + "Status: Unknown"
+        ));
+        menuItems.put("Spacer", createGuiItem(
+                Material.BARRIER,
+                ChatColor.RESET + "",
+                NO_ENCHANTMENT
+        ));
+        menuItems.put("Effect_Placeholder", createGuiItem(
+                Material.COAL,
+                ChatColor.RESET + "No Effect",
+                NO_ENCHANTMENT
+        ));
+        menuItems.put("Min_Max_Placeholder", createGuiItem(
+                Material.BRICK,
+                ChatColor.RESET + "--",
+                NO_ENCHANTMENT
+        ));
+
+        menuItems.put("Iron_Indicator", createGuiItem(
+                Material.IRON_INGOT,
+                ChatColor.RESET + "Iron Remaining",
+                NO_ENCHANTMENT
+        ));
+        menuItems.put("Gold_Indicator", createGuiItem(
+                Material.GOLD_INGOT,
+                ChatColor.RESET + "Gold Remaining",
+                NO_ENCHANTMENT
+        ));
+        menuItems.put("Emerald_Indicator", createGuiItem(
+                Material.EMERALD,
+                ChatColor.RESET + "Emeralds Remaining",
+                NO_ENCHANTMENT
+        ));
+        menuItems.put("Diamond_Indicator", createGuiItem(
+                Material.DIAMOND,
+                ChatColor.RESET + "Diamonds Remaining",
+                NO_ENCHANTMENT
+        ));
+        menuItems.put("Nether_Star_Indicator", createGuiItem(
+                Material.NETHER_STAR,
+                ChatColor.YELLOW + "Nether Stars Remaining",
+                NO_ENCHANTMENT
         ));
         //</editor-fold>
         //</editor-fold>
@@ -121,7 +162,11 @@ public class Data {
     }
 
     public static ItemStack getMenuItem(String id) {
-        return menuItems.get(id);
+        ItemStack item = menuItems.get(id);
+        if(item  != null)
+            return item.clone();
+
+        return null;
     }
 
 
