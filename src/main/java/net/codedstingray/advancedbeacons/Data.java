@@ -1,13 +1,15 @@
 package net.codedstingray.advancedbeacons;
 
+import net.codedstingray.advancedbeacons.util.EnchantmentData;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
+
+import static net.codedstingray.advancedbeacons.util.EnchantmentData.NO_ENCHANTMENT;
+import static net.codedstingray.advancedbeacons.util.ItemUtilities.createGuiItem;
 
 public class Data {
 
@@ -15,8 +17,6 @@ public class Data {
     private static final HashMap<String, ItemStack> menuItems = new HashMap<>();
     private static final Set<Material> containers;
     private static final Set<Material> powerBlocks;
-
-    private static final EnchantmentData[] NO_ENCHANTMENT = {};
 
     static {
         //<editor-fold desc="Items" defaultstate="collapsed">
@@ -57,27 +57,32 @@ public class Data {
         menuItems.put("Iron_Indicator", createGuiItem(
                 Material.IRON_INGOT,
                 ChatColor.RESET + "Iron Remaining",
-                NO_ENCHANTMENT
+                NO_ENCHANTMENT,
+                ChatColor.RED + "0"
         ));
         menuItems.put("Gold_Indicator", createGuiItem(
                 Material.GOLD_INGOT,
                 ChatColor.RESET + "Gold Remaining",
-                NO_ENCHANTMENT
+                NO_ENCHANTMENT,
+                ChatColor.RED + "0"
         ));
         menuItems.put("Emerald_Indicator", createGuiItem(
                 Material.EMERALD,
                 ChatColor.RESET + "Emeralds Remaining",
-                NO_ENCHANTMENT
+                NO_ENCHANTMENT,
+                ChatColor.RED + "0"
         ));
         menuItems.put("Diamond_Indicator", createGuiItem(
                 Material.DIAMOND,
                 ChatColor.RESET + "Diamonds Remaining",
-                NO_ENCHANTMENT
+                NO_ENCHANTMENT,
+                ChatColor.RED + "0"
         ));
         menuItems.put("Nether_Star_Indicator", createGuiItem(
                 Material.NETHER_STAR,
                 ChatColor.YELLOW + "Nether Stars Remaining",
-                NO_ENCHANTMENT
+                NO_ENCHANTMENT,
+                ChatColor.RED + "0"
         ));
         //</editor-fold>
         //</editor-fold>
@@ -120,24 +125,6 @@ public class Data {
         //</editor-fold>
     }
 
-    private static ItemStack createGuiItem(Material material, String name, EnchantmentData[] enchantments, String... lore) {
-        ItemStack item = new ItemStack(material, 1);
-
-        ItemMeta meta = item.getItemMeta();
-        if(meta != null) {
-            meta.setDisplayName(name);
-            meta.setLore(Arrays.asList(lore));
-
-            for(EnchantmentData e: enchantments) {
-                meta.addEnchant(e.enchantment, e.level, e.ignoreLevelCap);
-            }
-
-            item.setItemMeta(meta);
-        }
-
-        return item;
-    }
-
 
     public static ItemStack getBeaconActivator() {
         return beaconActivator.clone();
@@ -161,24 +148,12 @@ public class Data {
         return powerBlocks.contains(blockType);
     }
 
+
     public static ItemStack getMenuItem(String id) {
         ItemStack item = menuItems.get(id);
         if(item  != null)
             return item.clone();
 
         return null;
-    }
-
-
-    private static class EnchantmentData {
-        public final Enchantment enchantment;
-        public final int level;
-        public final boolean ignoreLevelCap;
-
-        public EnchantmentData(Enchantment enchantment, int level, boolean ignoreLevelCap) {
-            this.enchantment = enchantment;
-            this.level = level;
-            this.ignoreLevelCap = ignoreLevelCap;
-        }
     }
 }
