@@ -18,7 +18,6 @@ public abstract class AbstractBeaconGui implements InventoryHolder, Listener {
 
     public AbstractBeaconGui(int size, String title, AdvancedBeacon beacon) {
         inventory = Bukkit.createInventory(this, size, title);
-        initializeItems();
         this.beacon = beacon;
 
         AdvancedBeacons.getInstance().getServer().getPluginManager().registerEvents(this, AdvancedBeacons.getInstance());
@@ -38,8 +37,18 @@ public abstract class AbstractBeaconGui implements InventoryHolder, Listener {
     }
 
     protected void setItem(int row, int column, ItemStack item) {
+        setItem(row, column, item, 1);
+    }
+
+    protected void setItem(int row, int column, ItemStack item, int amount) {
+        item.setAmount(amount);
         int index = 9 * row + column;
         inventory.setItem(index, item);
+    }
+
+    protected ItemStack getItem(int row, int column) {
+        int index = 9 * row + column;
+        return inventory.getItem(index);
     }
 
     //TODO: for optimization I can probably condense this into a sincle listener instead of one for each inventory
@@ -52,7 +61,7 @@ public abstract class AbstractBeaconGui implements InventoryHolder, Listener {
         handleInventoryClick(event);
     }
 
-    protected abstract void initializeItems();
+    public abstract void initializeItems();
     public abstract void update();
 
     protected abstract void handleInventoryClick(InventoryClickEvent event);

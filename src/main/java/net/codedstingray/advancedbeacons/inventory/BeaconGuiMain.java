@@ -1,18 +1,21 @@
 package net.codedstingray.advancedbeacons.inventory;
 
+import net.codedstingray.advancedbeacons.AdvancedBeacons;
 import net.codedstingray.advancedbeacons.Data;
 import net.codedstingray.advancedbeacons.beacon.AdvancedBeacon;
+import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class BeaconGuiMain extends AbstractBeaconGui {
+import static net.codedstingray.advancedbeacons.util.ItemUtilities.setLore;
 
+public class BeaconGuiMain extends AbstractBeaconGui {
 
     public BeaconGuiMain(AdvancedBeacon beacon) {
         super(9 * 6, "Advanced Beacon", beacon);
     }
 
     @Override
-    protected void initializeItems() {
+    public void initializeItems() {
         setItem(0, 4, Data.getMenuItem("Header_Main"));
 
         for(int i = 0; i < 6; i++) {
@@ -37,7 +40,16 @@ public class BeaconGuiMain extends AbstractBeaconGui {
 
     @Override
     public void update() {
-
+        int fIron = beacon.getFuelIron();
+        setLore(getItem(1, 4), (fIron > 0 ? ChatColor.GREEN : ChatColor.RED).toString() + fIron);
+        int fGold = beacon.getFuelGold();
+        setLore(getItem(2, 4), (fGold > 0 ? ChatColor.GREEN : ChatColor.RED).toString() + fGold);
+        int fEmerald = beacon.getFuelEmerald();
+        setLore(getItem(3, 4), (fEmerald > 0 ? ChatColor.GREEN : ChatColor.RED).toString() + fEmerald);
+        int fDiamond = beacon.getFuelDiamond();
+        setLore(getItem(4, 4), (fDiamond > 0 ? ChatColor.GREEN : ChatColor.RED).toString() + fDiamond);
+        int fNetherStar = beacon.getFuelNetherStar();
+        setLore(getItem(5, 4), (fNetherStar > 0 ? ChatColor.GREEN : ChatColor.RED).toString() + fNetherStar);
     }
 
     @Override
