@@ -18,7 +18,6 @@
 
 package net.codedstingray.advancedbeacons.beacon;
 
-import net.codedstingray.advancedbeacons.AdvancedBeacons;
 import net.codedstingray.advancedbeacons.inventory.BeaconGuiMain;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -27,8 +26,6 @@ import org.bukkit.block.Chest;
 import org.bukkit.block.Container;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Arrays;
 
 public class AdvancedBeacon {
 
@@ -47,14 +44,11 @@ public class AdvancedBeacon {
     private int fuelDiamond = 0;
     private int fuelNetherStar = 0;
 
+    private int range = 20;
+
     public AdvancedBeacon(BeaconStructure structure, Location location) {
         this.structure = structure;
         this.location = location.clone();
-
-//        chests[0] = location.getWorld().getBlockAt(location.add(-1, -1, 0));
-//        chests[1] = location.getWorld().getBlockAt(location.add(0, -1, -1));
-//        chests[2] = location.getWorld().getBlockAt(location.add(0, -1, 1));
-//        chests[3] = location.getWorld().getBlockAt(location.add(1, -1, 0));
 
         chests[0] = location.getWorld().getBlockAt(new Location(location.getWorld(), location.getBlockX() - 1, location.getBlockY() - 1, location.getBlockZ()));
         chests[1] = location.getWorld().getBlockAt(new Location(location.getWorld(), location.getBlockX(), location.getBlockY() - 1, location.getBlockZ() - 1));
@@ -71,6 +65,10 @@ public class AdvancedBeacon {
 
     public BeaconStructure getStructure() {
         return structure;
+    }
+
+    public int getRange() {
+        return range;
     }
 
     //<editor-fold desc="Fuel Getters" defaultstate="collapsed">

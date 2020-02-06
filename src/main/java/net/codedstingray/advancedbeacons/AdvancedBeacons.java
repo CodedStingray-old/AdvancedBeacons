@@ -21,6 +21,7 @@ package net.codedstingray.advancedbeacons;
 import net.codedstingray.advancedbeacons.beacon.BeaconManager;
 import net.codedstingray.advancedbeacons.beacon.BeaconUpdater;
 import net.codedstingray.advancedbeacons.commands.CommandInitializer;
+import net.codedstingray.advancedbeacons.effect.BeaconEffectManager;
 import net.codedstingray.advancedbeacons.event.listener.BeaconActivatorListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -33,6 +34,8 @@ public final class AdvancedBeacons extends JavaPlugin {
     private BeaconManager beaconManager;
     private BeaconUpdater beaconUpdater;
 
+    private BeaconEffectManager effectManager;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -40,11 +43,15 @@ public final class AdvancedBeacons extends JavaPlugin {
         beaconUpdater = new BeaconUpdater();
         beaconUpdater.runTaskTimer(this, 0, 1);
 
+        effectManager = new BeaconEffectManager();
+        effectManager.createEffects();
+
         CommandInitializer.initCommands(this);
 
         getServer().getPluginManager().registerEvents(beaconManager, this);
         getServer().getPluginManager().registerEvents(new BeaconActivatorListener(), this);
 
+        //activator recipe
         NamespacedKey key = new NamespacedKey(this, "recipe_advanced_beacon_activator");
         ShapedRecipe recipe = new ShapedRecipe(key, Data.getBeaconActivator());
 
@@ -73,6 +80,9 @@ public final class AdvancedBeacons extends JavaPlugin {
         return beaconManager;
     }
 
+    public BeaconEffectManager getEffectManager() {
+        return effectManager;
+    }
 
     private static AdvancedBeacons instance;
 

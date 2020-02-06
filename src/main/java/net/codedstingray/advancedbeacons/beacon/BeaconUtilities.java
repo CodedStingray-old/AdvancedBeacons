@@ -121,4 +121,17 @@ public class BeaconUtilities {
                 dy <= -1 && dy >= -4 &&
                 dz <= 4;
     }
+
+    //TODO: merge with #AABB
+    public static boolean inRange(AdvancedBeacon beacon, Location location) {
+        int range = beacon.getRange();
+
+        int dx = location.getBlockX() - beacon.getLocation().getBlockX();
+        int dy = location.getBlockY() - beacon.getLocation().getBlockY();
+        int dz = location.getBlockZ() - beacon.getLocation().getBlockZ();
+
+        return dx <= range && dx >= -range &&
+                dy <= range && dy >= -range &&
+                dz <= range && dz >= -range;
+    }
 }

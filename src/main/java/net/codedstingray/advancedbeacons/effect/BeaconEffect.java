@@ -11,6 +11,7 @@ public class BeaconEffect {
 
     public final ItemStack disabledIcon;
     public final ItemStack enabledIcon;
+    //TODO inactive for when out of fuel?
 
     public final FuelLevel minFuelLevel;
     public final int minBeaconTier;
