@@ -19,7 +19,6 @@
 package net.codedstingray.advancedbeacons.effect;
 
 import net.codedstingray.advancedbeacons.AdvancedBeacons;
-import net.codedstingray.advancedbeacons.beacon.AdvancedBeacon;
 import net.codedstingray.advancedbeacons.effect.logic.LogicFasterPlantGrowth;
 import net.codedstingray.advancedbeacons.util.EnchantmentData;
 import org.bukkit.ChatColor;
@@ -42,6 +41,7 @@ public class BeaconEffectManager {
 
         registeredEffects.put(effect.name, effect);
         effect.setLogic(logic);
+        logic.setEffect(effect);
         logic.init(args);
 
         AdvancedBeacons.getInstance().getServer().getPluginManager().registerEvents(logic, AdvancedBeacons.getInstance());

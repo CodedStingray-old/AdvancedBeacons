@@ -18,6 +18,7 @@
 
 package net.codedstingray.advancedbeacons.beacon;
 
+import net.codedstingray.advancedbeacons.effect.BeaconEffectEntry;
 import net.codedstingray.advancedbeacons.inventory.BeaconGuiMain;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -46,6 +47,8 @@ public class AdvancedBeacon {
 
     private int range = 20;
 
+    private BeaconEffectEntry[] effects = new BeaconEffectEntry[12];
+
     public AdvancedBeacon(BeaconStructure structure, Location location) {
         this.structure = structure;
         this.location = location.clone();
@@ -57,6 +60,10 @@ public class AdvancedBeacon {
 
         guiMain = new BeaconGuiMain(this);
         guiMain.initializeItems();
+
+        for(int i = 0; i < effects.length; i++) {
+            effects[i] = new BeaconEffectEntry();
+        }
     }
 
     public Location getLocation() {

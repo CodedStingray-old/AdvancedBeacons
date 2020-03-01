@@ -19,6 +19,8 @@
 package net.codedstingray.advancedbeacons.beacon;
 
 import net.codedstingray.advancedbeacons.Data;
+import net.codedstingray.advancedbeacons.effect.BeaconEffect;
+import net.codedstingray.advancedbeacons.util.MultiValueMap;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -40,6 +42,8 @@ public class BeaconManager implements Listener {
 
     //TODO: Chunk referenced storing of beacons for optimization
     private HashMap<Location, AdvancedBeacon> advancedBeacons = new HashMap<>();
+
+    private MultiValueMap<BeaconEffect, AdvancedBeacon> effectReferencedBeacons = new MultiValueMap<>();
 
     public boolean createBeacon(Player player, Location location) {
         if(advancedBeacons.get(location) != null) {

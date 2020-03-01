@@ -21,6 +21,7 @@ package net.codedstingray.advancedbeacons.effect.logic;
 import net.codedstingray.advancedbeacons.AdvancedBeacons;
 import net.codedstingray.advancedbeacons.beacon.AdvancedBeacon;
 import net.codedstingray.advancedbeacons.beacon.BeaconUtilities;
+import net.codedstingray.advancedbeacons.effect.BeaconEffect;
 import net.codedstingray.advancedbeacons.effect.BeaconEffectLogic;
 import net.codedstingray.advancedbeacons.util.scheduler.SetBlockData;
 import org.bukkit.Material;
@@ -31,6 +32,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockGrowEvent;
 
 public class LogicFasterPlantGrowth implements BeaconEffectLogic {
+    private BeaconEffect effect;
+
+    @Override
+    public void setEffect(BeaconEffect effect) {
+        this.effect = effect;
+    }
+
     @Override
     public void init(String... args) {
 

@@ -28,6 +28,11 @@ import org.bukkit.event.Listener;
  */
 public interface BeaconEffectLogic extends Listener {
 
+    /**
+     * Sets the effect this logic is bound to. Each logic may only be bound to a single logic.
+     */
+    void setEffect(BeaconEffect effect);
+
     void init(String... args);
 
     default void update() {}
